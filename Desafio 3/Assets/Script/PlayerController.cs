@@ -10,10 +10,11 @@ public float playerSpeed = 0.00001f;
 public string playerName = "Warrior";
     public SwordController SwordController;
     public GunController GunController;
+    public GameObject Gun;
+    public GameObject Sword;
     bool weapons = false;
-
     int playerMovement;
-Rigidbody rb;
+    Rigidbody rb;
 // Start is called before the first frame update
 void Start()
 {
@@ -26,30 +27,34 @@ void Start()
         if (Input.GetKey("w"))
         {
             transform.position += new Vector3(0, 0, -playerSpeed / 100);
+
+            
         }
         if (Input.GetKey("a"))
         {
             transform.position += new Vector3(playerSpeed / 100, 0, 0);
+
         }
         if (Input.GetKey("s"))
         {
             transform.position += new Vector3(0, 0, playerSpeed / 100);
+
         }
         if (Input.GetKey("d"))
         {
             transform.position += new Vector3(-playerSpeed / 100, 0, 0);
         }
-        if (Input.GetKeyDown(KeyCode.Q) && weapons == false)
+        if (Input.GetKeyDown("q") && weapons == false)
         {
 
-            SwordController.Sword.SetActive(true);
-            GunController.gun.SetActive(false);
+            Sword.SetActive(true);
+            Gun.SetActive(false);
             weapons = true;
         }
-        else if (Input.GetKey(KeyCode.Q) && weapons == true)
+        if (Input.GetKey("q") && weapons == true)
         {
-            SwordController.Sword.SetActive(false);
-            GunController.gun.SetActive(true);
+            Sword.SetActive(false);
+            Gun.SetActive(true);
             weapons = false;
         }
     }

@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public int enemyHealth = 100;
     public int enemyLife = 3;
     public float enemySpeed = 0.5f;
+    public GameObject enemySound;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class EnemyController : MonoBehaviour
         if (enemyHealth <= 0 && enemyLife == 0)
         {
             Destroy(gameObject);
+            Instantiate(enemySound);
             Debug.Log("Enemigo destruido");
         }
         else if (enemyHealth == 0)

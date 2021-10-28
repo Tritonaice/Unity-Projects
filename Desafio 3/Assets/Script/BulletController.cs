@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour
     public GameObject bullet;
     public Transform spawnPoint;
     public EnemyController EnemyController;
+    public GameObject Sound;
 
     public float shotForce = 1500;
     public float shotRate = 10f;
@@ -27,15 +28,19 @@ public class BulletController : MonoBehaviour
         {
             if (Time.time>shotRateTime)
             {
+                Instantiate(Sound);
+
                 GameObject newBullet;
 
                 //bullet.transform.localRotation = Quaternion.Euler(0, 0, 180f);
 
                 transform.localRotation = Quaternion.Euler(0, -180f, 0);
 
-                newBullet = Instantiate(bullet, position: spawnPoint.position, spawnPoint.rotation );
+                
 
+                newBullet = Instantiate (bullet, position: spawnPoint.position, spawnPoint.rotation);
 
+                
                 //EnemyController.enemyHealth -= shotDamage;
 
 
