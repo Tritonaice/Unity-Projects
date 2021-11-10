@@ -7,64 +7,56 @@ public class PlayerController : MonoBehaviour
     public int playerForce = 150;
     public int playerHealth = 100;
     public float playerSpeed = 0.00001f;
-    [SerializeField] private float cameraSpeed = 3f;
     public string playerName = "Player";
     public SwordController SwordController;
     public GunController GunController;
     public GameObject Gun;
     public GameObject Sword;
     private GameObject Player;
-    private float cameraAxis;
+    [SerializeField] private int speed = 1;
     bool weapons = true;
     int playerMovement;
     [SerializeField] private float distance;
-    Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private float cameraSpeed = 3f;
+    [SerializeField] private float cameraAxis;
     // Start is called before the first frame update
     void Start()
 {
-    rb = GetComponent<Rigidbody>();
-        Player = GameObject.Find("Player");
+    rb = GetComponent<Rigidbody>();;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        Move();
+        Vector3 movementInput = Vector3.zero;
         RotatePlayer();
-        if (Input.GetKey("w"))
+        Debug.Log("Inicio");
+        if (Input.GetKey(KeyCode.W))
         {
-            transform.position += new Vector3(0, 0, -playerSpeed / 100);
+            movementInput.x = -1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            movementInput.x = 1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            movementInput.z = 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            movementInput.z = -1;
+        }
 
-            
-        }
-        if (Input.GetKey("a"))
-        {
-            transform.position += new Vector3(playerSpeed / 100, 0, 0);
 
-        }
-        if (Input.GetKey("s"))
-        {
-            transform.position += new Vector3(0, 0, playerSpeed / 100);
+    }
 
-        }
-        if (Input.GetKey("d"))
-        {
-            transform.position += new Vector3(-playerSpeed / 100, 0, 0);
-        }
-        if (Input.GetKeyDown("q") && weapons == false)
-        {
-            Sword.SetActive(true);
-            Gun.SetActive(false);
-            weapons = true;
-        }
-        if (Input.GetKey("q") && weapons == true)
-        {
-            Sword.SetActive(false);
-            Gun.SetActive(true);
-            weapons = false;
-        }
+    void Move(Vector3 direction)
+    {
+        rb.AddForce(direction.normalized * speed, ForceMode.Acceleration);
+        //transform.position += direction.normalized * speed * Time.deltaTime;
     }
     private void Move()
     {
@@ -74,8 +66,8 @@ public class PlayerController : MonoBehaviour
     }
     private void RotatePlayer()
     {
-        cameraAxis += Input.GetAxis("Mouse X") * 5;
+        cameraAxis += Input.GetAxis("Mouse X") * 3;
         Quaternion angulo = Quaternion.Euler(0, cameraAxis, 0);
         transform.localRotation = angulo;
     }
-    }
+}

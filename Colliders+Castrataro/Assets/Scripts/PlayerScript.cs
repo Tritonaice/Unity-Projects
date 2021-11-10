@@ -9,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private int speed = 1;
     private bool playerScale = false;
     private float timeLeft = 2;
+    [SerializeField] private float cameraSpeed = 3f;
+    [SerializeField] private float cameraAxis;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RotatePlayer();
+        Move();
         Vector3 movementInput = Vector3.zero;
         Debug.Log("Inicio");
         if (Input.GetKey(KeyCode.W))
@@ -76,6 +80,18 @@ public class PlayerScript : MonoBehaviour
     {
         rb.AddForce(direction.normalized * speed, ForceMode.Acceleration);
         //transform.position += direction.normalized * speed * Time.deltaTime;
+    }
+    private void Move()
+    {
+        float ejeHorizontal = Input.GetAxisRaw("Horizontal");
+        float ejeVertical = Input.GetAxisRaw("Vertical");
+        transform.Translate(cameraSpeed * Time.deltaTime * new Vector3(ejeHorizontal, 0, ejeVertical));
+    }
+    private void RotatePlayer()
+    {
+        cameraAxis += Input.GetAxis("Mouse X") * 3;
+        Quaternion angulo = Quaternion.Euler(0, cameraAxis, 0);
+        transform.localRotation = angulo;
     }
 }
 
